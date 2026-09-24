@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Отчет по проектированию ИС</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #525659;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .document {
+    background-color: white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    font-size: 14pt;
+    line-height: 1.5;
+    color: black;
+  }
+  h1, h2, h3, h4 {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  h1 { font-size: 16pt; text-transform: uppercase; }
+  h2 { font-size: 14pt; }
+  p {
+    text-align: justify;
+    text-indent: 1.25cm;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  ul, ol {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-align: justify;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 12pt;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 6px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .bold-cell { font-weight: bold; }
+  .gray-bg { background-color: #d9d9d9; }
+  .rotate {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    padding: 15px 5px !important;
+  }
+  
+  @media print {
+    body { background-color: white; padding: 0; display: block; }
+    .document { width: 100%; min-height: auto; padding: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="document">
+  <h1>Отчет<br>по проектированию информационной системы</h1>
+  <p style="text-align: center; text-indent: 0; font-weight: bold; font-size: 14pt; margin-bottom: 30px;">Тема: Образовательная платформа для IT-менторства</p>
+
+  <h2>Этап №1. Описание предметной области</h2>
+  <p><b>Миссия компании:</b> Обеспечение качественного, практико-ориентированного IT-образования через прямое наставничество (менторство) для быстрого старта карьеры студентов. Главное преимущество перед конкурентами — фокус на практическую проверку заданий живыми специалистами отрасли.</p>
+  
+  <p style="text-indent: 0; font-weight: bold; margin-top: 15px;">Деловая концепция компании:</p>
+  <ol>
+    <li><b>Что получит Заказчик:</b> Актуальные знания, проверку практических заданий, карьерные консультации, сертификат.</li>
+    <li><b>Кто и как выступает партнером:</b> IT-компании (в качестве площадок для трудоустройства), независимые эксперты (для составления учебных программ).</li>
+    <li><b>Отношения с конкурентами:</b> Временные компромиссы в виде кросс-промоушена (обмен аудиторией со смежными нишами).</li>
+    <li><b>Что получит собственник:</b> Прибыль от продажи курсов, капитализацию бренда.</li>
+    <li><b>Что получат менеджеры:</b> Профессиональный рост, премии за выполнение KPI по удовлетворенности учеников (NPS).</li>
+    <li><b>Что получит персонал (Менторы):</b> Дополнительный заработок, систематизацию знаний, прокачку навыков.</li>
+    <li><b>Сотрудничество с общественными организациями:</b> Проведение открытых профориентационных вебинаров.</li>
+    <li><b>Отношения с государством:</b> Участие в государственных образовательных инициативах, уплата налогов.</li>
+  </ol>
+
+  <p style="text-indent: 0; font-weight: bold; margin-top: 15px;">Структура организации:</p>
+  <p style="text-indent: 0; padding-left: 20px;">
+    Генеральный директор (CEO)<br>
+    ├── Технический директор (CTO)<br>
+    │&nbsp;&nbsp;&nbsp;└── Отдел разработки ИС (Программисты, Сисадмины)<br>
+    ├── Директор по образованию (Head of Education)<br>
+    │&nbsp;&nbsp;&nbsp;├── Методисты<br>
+    │&nbsp;&nbsp;&nbsp;└── Менторы / Преподаватели<br>
+    └── Директор по маркетингу (CMO)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;└── Отдел продаж и продвижения
+  </p>
+
+  <h2>Этап №2. Выявление задач решаемых с помощью ИС</h2>
+  <p style="text-indent: 0; font-weight: bold;">Анкета для руководителя (Директора по образованию):</p>
+  <ol>
+    <li><i>Цели ИС:</i> Автоматизация выдачи уроков и контроля качества проверки домашних заданий.</li>
+    <li><i>Орг. структура:</i> Директор -> Методисты -> Менторы.</li>
+    <li><i>Задачи:</i> Удобное распределение учеников по менторам, трекинг успеваемости.</li>
+    <li><i>Последовательность действий:</i> Студент изучает материал -> Сдает задание -> Ментор получает уведомление -> Проверяет -> Ставит оценку.</li>
+    <li><i>Внешние организации:</i> Платежные шлюзы для оплаты курсов, сервисы рассылок.</li>
+    <li><i>Справочный материал:</i> Внутренняя база знаний с эталонными решениями задач.</li>
+    <li><i>Время на операции:</i> Проверка одной работы занимает 10-20 минут. Пиковые нагрузки: выходные дни.</li>
+    <li><i>Техническое оснащение:</i> ПК, доступ в интернет. ПО работает через браузер.</li>
+    <li><i>Отчеты:</i> Еженедельный отчет по активности студентов и скорости ответов менторов.</li>
+    <li><i>Удаленные объекты:</i> 100% сотрудников работают в удаленном формате.</li>
+    <li><i>Документооборот:</i> Электронные сертификаты, автоматические договоры-оферты.</li>
+  </ol>
+
+  <p style="text-indent: 0; font-weight: bold;">Описание функций и бизнесов компании:</p>
+  <p>Где бизнес — это определенный образовательный продукт или услуга.</p>
+  <table>
+    <tr>
+      <td rowspan="2" colspan="2" class="gray-bg"></td>
+      <td colspan="3" class="bold-cell gray-bg">БИЗНЕСЫ</td>
+    </tr>
+    <tr>
+      <td class="bold-cell">№1 (Видеокурсы)</td>
+      <td class="bold-cell">№2 (Менторство)</td>
+      <td class="bold-cell">№3 (Корпоративное обучение)</td>
+    </tr>
+    <tr>
+      <td rowspan="6" class="rotate bold-cell gray-bg">ЭТАПЫ<br>ПРОИЗВОДСТВЕННОГО<br>ЦИКЛА</td>
+      <td class="gray-bg">Проектирование</td>
+      <td>X</td>
+      <td>X</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <td class="gray-bg">Закупки</td>
+      <td>X</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="gray-bg">Производство</td>
+      <td>X</td>
+      <td></td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <td class="gray-bg">Распределение</td>
+      <td>X</td>
+      <td>X</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="gray-bg">Сбыт</td>
+      <td>X</td>
+      <td></td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <td class="gray-bg">Сопровождение</td>
+      <td>X</td>
+      <td>X</td>
+      <td>X</td>
+    </tr>
+  </table>
+
+  <p style="text-indent: 0; font-weight: bold;">Описание функций управления:</p>
+  <table>
+    <tr>
+      <td rowspan="2" class="gray-bg">Этапы<br>управленческого<br>цикла</td>
+      <td colspan="7" class="bold-cell gray-bg">Компоненты менеджмента</td>
+    </tr>
+    <tr>
+      <td class="rotate">Структуры</td>
+      <td class="rotate">Логистика</td>
+      <td class="rotate">Финансы</td>
+      <td class="rotate">Экономика</td>
+      <td class="rotate">Учет</td>
+      <td class="rotate">Маркетинг</td>
+      <td class="rotate">Персонал</td>
+    </tr>
+    <tr>
+      <td>Сбор информации</td>
+      <td>X</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Выработка решений</td>
+      <td>X</td><td></td><td>X</td><td>X</td><td></td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Реализация</td>
+      <td>X</td><td>X</td><td>X</td><td></td><td></td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Учет</td>
+      <td></td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Контроль</td>
+      <td>X</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Анализ</td>
+      <td>X</td><td></td><td>X</td><td>X</td><td></td><td>X</td><td>X</td>
+    </tr>
+    <tr>
+      <td>Регулирование</td>
+      <td>X</td><td></td><td>X</td><td>X</td><td></td><td>X</td><td>X</td>
+    </tr>
+  </table>
+
+  <p style="text-indent: 0; font-weight: bold;">Зоны ответственности персонала за функции (роли):</p>
+  <table>
+    <tr>
+      <td rowspan="2" class="gray-bg bold-cell">ОРГЗВЕНЬЯ</td>
+      <td colspan="5" class="bold-cell gray-bg">ФУНКЦИИ</td>
+    </tr>
+    <tr>
+      <td>Управление ИС</td>
+      <td>Маркетинг</td>
+      <td>Создание курсов</td>
+      <td>Проверка ДЗ</td>
+      <td>Поддержка</td>
+    </tr>
+    <tr>
+      <td>Ген. директор</td>
+      <td class="gray-bg">X</td>
+      <td>X</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Разработчик ИС</td>
+      <td class="gray-bg">X</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <td>Маркетолог</td>
+      <td></td>
+      <td class="gray-bg">X</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Методист</td>
+      <td></td>
+      <td></td>
+      <td class="gray-bg">X</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ментор</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="gray-bg">X</td>
+      <td></td>
+    </tr>
+  </table>
+
+  <p style="text-indent: 0; font-weight: bold;">UML схемы прецедентов (по 1 прецеденту из каждой роли):</p>
+  
+  <p><i>1. Диаграмма прецедентов (Задачи пользователей):</i></p>
+  <div class="mermaid" style="text-align:center;">
+    flowchart LR
+      S([Студент]) --> UC1(Сдать тест)
+      M([Ментор]) --> UC2(Проверить ДЗ)
+      A([Администратор]) --> UC3(Управление курсами)
+  </div>
+
+  <p><i>2. Диаграмма последовательности (Сдача и проверка работы):</i></p>
+  <div class="mermaid" style="text-align:center;">
+    sequenceDiagram
+      actor Студент
+      participant Платформа
+      actor Ментор
+      Студент->>Платформа: Отправить решение задания
+      Платформа-->>Студент: Успешно отправлено
+      Платформа->>Ментор: Уведомление: Новое ДЗ
+      Ментор->>Платформа: Оценить работу
+      Платформа-->>Студент: Оценка выставлена
+  </div>
+
+  <p><i>3. Диаграмма классов (Схема данных):</i></p>
+  <div class="mermaid" style="text-align:center;">
+    classDiagram
+      class User {
+          +int id
+          +string name
+          +string role
+      }
+      class Course {
+          +int id
+          +string title
+      }
+      class Homework {
+          +int id
+          +int grade
+          +submit()
+      }
+      User "1" -- "*" Homework : Сдает/Проверяет
+      Course "1" -- "*" Homework : Относится к
+  </div>
+
+  <h2>Этап №3. Описание общей схемы ИС</h2>
+  <p><b>Схема доступа к данным:</b><br>
+  Система построена на архитектуре Клиент-Сервер (SPA Web-приложение).<br>
+  <b>Среда доступа:</b> Браузер пользователя (HTML, CSS, JavaScript).<br>
+  <b>Сервер:</b> Backend на языке Python.<br>
+  <b>СУБД:</b> PostgreSQL (для хранения информации о пользователях, курсах и прогрессе).</p>
+  
+  <p><b>Разработка хранилища данных (Валидность данных):</b><br>
+  В БД используются механизмы контроля целостности: уникальность логина/email, хеширование паролей, ограничения внешних ключей между таблицами Users, Courses и Homeworks. Валидация входных данных происходит на стороне клиента и сервера.</p>
+  
+  <p><b>Разработка приложения (Авторизация и функционал):</b><br>
+  Реализована ролевая модель (Студент, Ментор). Авторизация происходит с использованием сессий. Функционал включает личные кабинеты, интерактивное прохождение тестов, панель проверки работ для менторов и генерацию именных сертификатов.</p>
+  
+  <p><b>Описание работы на примере скрин-форм:</b><br>
+  1. <i>Форма входа:</i> Поля логин и пароль. При успешном входе система определяет роль.<br>
+  2. <i>Дашборд Студента:</i> Карточка курса, динамический прогресс-бар, кнопка перехода к лекциям.<br>
+  3. <i>Дашборд Ментора:</i> Список задач на проверку с индикаторами статуса.</p>
+  
+  <p><b>Тестирование и нагрузка:</b><br>
+  Произведено тестирование UI логики (выполнение тестов с верными и неверными ответами). Предполагаемая нагрузка: 1000 DAU. Система кеширует статику, обеспечивая быстрый отклик.</p>
+
+  <h2>Этап №4. Вывод</h2>
+  <ol>
+    <li><b>О возможностях выбранных технологий:</b> Связка HTML/CSS/JS полностью покрывает потребности интерфейса образовательной платформы, обеспечивая динамичность без перезагрузки страниц.</li>
+    <li><b>О тестировании и работоспособности:</b> Система показала стабильную работу бизнес-логики (авторизация, прохождение курсов, выдача сертификатов).</li>
+    <li><b>О расширяемости и кроссплатформенности:</b> Web-интерфейс кроссплатформенен (работает в любом браузере на Windows, macOS, мобильных ОС). Модульная структура позволяет легко добавлять новые блоки (чаты, рейтинги).</li>
+  </ol>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Mentor | Платформа</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar hidden" id="navbar">
+        <div class="logo">
+            <span class="logo-icon">{'}'}</span> IT Mentor
+        </div>
+        <div class="nav-links" id="navLinks">
+            <!-- Dynamic links based on role -->
+        </div>
+        <div class="user-profile">
+            <span class="role-badge" id="userRoleBadge"></span>
+            <span class="user-name" id="userNameDisplay"></span>
+            <button class="btn-text" onclick="app.logout()">Выйти</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- View: Login -->
+        <section id="view-login" class="view active">
+            <div class="login-card">
+                <h2>Вход в платформу</h2>
+                <p>Используйте тестовые данные:<br><br>
+                   Студент: <b>student</b> / пароль: <b>123</b><br>
+                   Ментор: <b>mentor</b> / пароль: <b>123</b>
+                </p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Логин (email)</label>
+                        <input type="text" id="loginEmail" required value="student">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" id="loginPassword" required value="123">
+                    </div>
+                    <p class="error-msg" id="loginError"></p>
+                    <button type="submit" class="btn primary full-width">Войти</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- View: Student Dashboard -->
+        <section id="view-student-dashboard" class="view">
+            <header class="dashboard-header">
+                <h1 id="studentWelcome">Привет! 👋</h1>
+                <p>Продолжите свое обучение с того места, где остановились.</p>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h3>Пройдено уроков</h3>
+                    <div class="value" id="statsLessons">2 / 3</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Средний балл</h3>
+                    <div class="value accent">95%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Сертификаты</h3>
+                    <div class="value success" id="certCount">0</div>
+                </div>
+            </section>
+
+            <section class="courses-section">
+                <h2>Мои курсы</h2>
+                <div id="studentCoursesList"></div>
+            </section>
+        </section>
+
+        <!-- View: Mentor Dashboard -->
+        <section id="view-mentor-dashboard" class="view">
+            <header class="dashboard-header">
+                <h1>Панель ментора 👩‍🏫</h1>
+                <p>У вас есть новые работы на проверку.</p>
+            </header>
+            <section class="hw-section">
+                <h2>Работы на проверку</h2>
+                <div class="hw-list" id="mentorHwList">
+                    <!-- Dynamic HW items -->
+                </div>
+            </section>
+        </section>
+
+        <!-- View: Course Lesson & Test -->
+        <section id="view-lesson" class="view">
+            <button class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад к курсам</button>
+            <div class="lesson-layout">
+                <div class="lesson-content">
+                    <h2 id="lessonTitle">Название урока</h2>
+                    <div class="video-placeholder">
+                        <span id="videoText">▶ Видеоплеер (Заглушка)</span>
+                    </div>
+                    <div class="lesson-text" id="lessonText">
+                        Описание урока...
+                    </div>
+                    
+                    <div class="test-section" id="testSection" style="display:none;">
+                        <h3>Тестирование по курсу</h3>
+                        <p class="test-desc">Пройдите финальный тест, чтобы получить сертификат об окончании.</p>
+                        <div id="testQuestion" class="test-q">Вопрос 1...</div>
+                        <div class="options-list" id="testOptions">
+                            <!-- Radio buttons -->
+                        </div>
+                        <button class="btn primary mt-4" onclick="app.submitTest()">Ответить</button>
+                        <p id="testResult" class="test-result"></p>
+                    </div>
+
+                </div>
+                <div class="lesson-sidebar">
+                    <h3>Список уроков</h3>
+                    <ul class="lesson-list" id="lessonSidebarList">
+                        <!-- Lessons -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Certificate -->
+        <section id="view-certificate" class="view">
+             <button class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад в профиль</button>
+             <div class="certificate-wrapper">
+                 <div class="certificate" id="certDownloadArea">
+                     <div class="cert-bg"></div>
+                     <div class="cert-header">IT Mentor Platform</div>
+                     <h1>СЕРТИФИКАТ</h1>
+                     <p>Настоящим подтверждается, что студент</p>
+                     <h2 id="certStudentName">Иван Иванов</h2>
+                     <p>успешно прошел(а) программу обучения и сдал(а) финальный экзамен по курсу</p>
+                     <h3 id="certCourseName">QA Automation</h3>
+                     <div class="cert-footer">
+                         <span>Дата выдачи: <span id="certDate"></span></span>
+                         <span class="signature">Директор: _ _ _ _ _ _ _ _ _ _ _ _</span>
+                     </div>
+                 </div>
+                 <button class="btn primary mt-4" onclick="app.printCert()">Печать / Сохранить как PDF</button>
+             </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
