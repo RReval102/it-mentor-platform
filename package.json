@@ -7,6 +7,9 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",
-    "http-server": "^14.1.1"
+    "allure-commandline": "^2.46.1",
+    "allure-playwright": "^3.13.0",
+    "http-server": "^14.1.1",
+    "k6": "^0.0.0"
   }
 }

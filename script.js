@@ -155,6 +155,7 @@ const app = {
                 </div>
                 <div class="course-actions">
                     <button class="btn primary full-width" onclick="app.openCourse()">Продолжить обучение</button>
+                    <button id="paymentButton" class="btn full-width mt-4" style="background-color: red; color: white; margin-top: 10px;">Оплатить следующий модуль</button>
                     ${hasCert ? '<button class="btn success full-width mt-4" onclick="app.navigate(\'certificate\')">Посмотреть сертификат 🏆</button>' : ''}
                 </div>
             </div>

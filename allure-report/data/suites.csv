@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3961","Студент может войти и увидеть дашборд","chromium","2026-10-01","passed","2026-10-01","IT Mentor Platform E2E","e2e.spec.js","",""
+"","9591","E2E: Полный цикл сдачи экзамена студентом","chromium","2026-10-01","passed","2026-10-01","Advanced Testing Suite (E2E, Usability, API Load)","advanced.spec.js","",""
+"","1823","Ошибка при неверном логине","chromium","2026-10-01","passed","2026-10-01","IT Mentor Platform E2E","e2e.spec.js","",""
+"","5472","Usability Test: Проверка цвета кнопки оплаты (Ожидается ошибка)","chromium","2026-10-01","failed","2026-10-01","Advanced Testing Suite (E2E, Usability, API Load)","advanced.spec.js","",""
+"","4989","API/Load Test: Нагрузочная проверка (100 запросов API)","chromium","2026-10-01","passed","2026-10-01","Advanced Testing Suite (E2E, Usability, API Load)","advanced.spec.js","",""
+"","3192","Ментор может войти и проверить ДЗ","chromium","2026-10-01","passed","2026-10-01","IT Mentor Platform E2E","e2e.spec.js","",""

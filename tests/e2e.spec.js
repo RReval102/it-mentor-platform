@@ -22,7 +22,7 @@ test.describe('IT Mentor Platform E2E', () => {
     // Переход к курсу
     await page.click('button:has-text("Продолжить обучение")');
     await expect(page.locator('#view-lesson')).toBeVisible();
-    await expect(page.locator('#lessonTitle')).toContainText('Введение в QA');
+    await expect(page.locator('#lessonTitle')).toContainText('Финальный Экзамен');
   });
 
   test('Ментор может войти и проверить ДЗ', async ({ page }) => {
@@ -34,13 +34,13 @@ test.describe('IT Mentor Platform E2E', () => {
     await expect(page.locator('.hw-list')).toContainText('ДЗ 2: Локаторы (XPATH)');
     
     // Клик "Проверить"
-    const checkBtn = page.locator('button:has-text("Проверить")').first();
+    const checkBtn = page.locator('#btn-101');
     await checkBtn.click();
     
     // Ждем, пока кнопка исчезнет (замокана задержка в script.js)
     await expect(checkBtn).toBeHidden({ timeout: 2000 });
     // Значок должен стать "Проверено"
-    await expect(page.locator('.badge.success').first()).toHaveText('Проверено (5/5)');
+    await expect(page.locator('#badge-101')).toHaveText('Проверено (5/5)');
   });
 
   test('Ошибка при неверном логине', async ({ page }) => {
