@@ -1,1 +1,0 @@
-[Load Test] 50 requests took 102ms
