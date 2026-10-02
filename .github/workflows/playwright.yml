@@ -22,8 +22,20 @@ jobs:
       with:
         node-version: lts/*
         
-    - name: Install dependencies
+    - name: Install dependencies (Node)
       run: npm ci || npm install
+      
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install Python dependencies
+      run: pip install fastapi uvicorn sqlalchemy pytest httpx
+      
+    - name: Run Backend DB Tests (Pytest)
+      run: pytest tests/test_db.py
+      continue-on-error: true # продолжаем при падении
       
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps

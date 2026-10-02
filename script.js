@@ -58,6 +58,11 @@ const app = {
         // Event Listeners
         document.getElementById('loginForm').addEventListener('submit', this.handleLogin.bind(this));
         
+        const addCourseForm = document.getElementById('addCourseForm');
+        if (addCourseForm) {
+            addCourseForm.addEventListener('submit', this.handleAddCourse.bind(this));
+        }
+        
         // Auto-login from local storage (mock session)
         const savedSession = localStorage.getItem('itmentor_user');
         if (savedSession) {
@@ -282,6 +287,44 @@ const app = {
             badge.className = 'badge success';
             btn.style.display = 'none'; // hide button after check
         }, 800);
+    },
+
+    async handleAddCourse(e) {
+        e.preventDefault();
+        const title = document.getElementById('newCourseTitle').value;
+        const desc = document.getElementById('newCourseDesc').value;
+        const statusEl = document.getElementById('addCourseStatus');
+        const btn = e.target.querySelector('button');
+
+        statusEl.textContent = 'Отправка данных в БД...';
+        statusEl.style.color = 'var(--text-secondary)';
+        btn.disabled = true;
+
+        try {
+            // Пытаемся отправить данные на наш Python Backend (FastAPI + PostgreSQL)
+            const response = await fetch('http://localhost:8000/api/courses', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: title, description: desc })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                statusEl.textContent = `✅ Курс "${data.title}" успешно добавлен в базу данных (ID: ${data.id})!`;
+                statusEl.style.color = 'var(--success)';
+                e.target.reset();
+            } else {
+                throw new Error('Ошибка сервера');
+            }
+        } catch (error) {
+            console.error('API Error:', error);
+            // Фолбэк для демо (если бэкенд выключен или это GitHub Pages)
+            statusEl.textContent = `✅ Курс "${title}" добавлен локально (бэкенд недоступен, симуляция).`;
+            statusEl.style.color = 'var(--accent)';
+            e.target.reset();
+        } finally {
+            btn.disabled = false;
+        }
     }
 };
 
