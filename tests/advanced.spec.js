@@ -35,7 +35,7 @@ test.describe('Advanced Testing Suite (E2E, Usability, API Load)', () => {
     
     // Переход к курсу и выбор последнего урока (Экзамен)
     await page.click('button:has-text("Продолжить обучение")');
-    await page.click('#sidebar-lesson-3');
+    await page.click('#sidebar-lesson-12');
     
     await expect(page.locator('#testSection')).toBeVisible();
     

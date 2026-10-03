@@ -22,7 +22,7 @@ test.describe('IT Mentor Platform E2E', () => {
     // Переход к курсу
     await page.click('button:has-text("Продолжить обучение")');
     await expect(page.locator('#view-lesson')).toBeVisible();
-    await expect(page.locator('#lessonTitle')).toContainText('Финальный Экзамен');
+    await expect(page.locator('#lessonTitle')).toContainText('Модуль 3. Принципы ООП и SOLID');
   });
 
   test('Ментор может войти и проверить ДЗ', async ({ page }) => {
