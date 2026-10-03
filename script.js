@@ -6,29 +6,21 @@ const DB = {
     ],
     course: {
         id: 1,
-        title: 'QA Automation Bootcamp',
+        title: 'AQA',
         description: 'Полный практический курс по автоматизации тестирования на Python и Selenium.',
         lessons: [
-            { 
-                id: 1, 
-                title: 'Введение в QA', 
-                text: 'На этом уроке мы разберем основные понятия обеспечения качества, чем отличается QA от QC и тестирования. Поговорим про жизненный цикл разработки ПО (SDLC).', 
-                completed: true,
-                isTest: false 
-            },
-            { 
-                id: 2, 
-                title: 'Локаторы Selenium', 
-                text: 'Основа UI автоматизации — умение находить элементы. Вы изучите CSS селекторы и XPATH. Как писать надежные локаторы, которые не ломаются при каждом изменении верстки.', 
-                completed: true,
-                isTest: false 
-            },
-            { 
-                id: 3, 
-                title: 'Финальный Экзамен', 
-                text: 'Поздравляем с прохождением всех материалов! Чтобы завершить курс и получить сертификат, вам необходимо сдать финальный тест.', 
-                completed: false, 
-                isTest: true,
+            { id: 1, title: 'Модуль 1. Введение в автотесты 1', text: 'На этом уроке мы разберем основные понятия обеспечения качества, чем отличается QA от QC и тестирования.', completed: true, isTest: false },
+            { id: 2, title: 'Модуль 2. Основы языка Python', text: 'Основа языка Python. Фундаментальные концепции, типы данных, структуры данных и базовые алгоритмы.', completed: true, isTest: false },
+            { id: 3, title: 'Модуль 3. Принципы ООП и SOLID', text: 'Изучаем объектно-ориентированное программирование, классы, наследование, инкапсуляцию, полиморфизм и принципы SOLID.', completed: false, isTest: false },
+            { id: 4, title: 'Модуль 4. Инструменты для работы с backend', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 5, title: 'Модуль 5. Автотесты на backend', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 6, title: 'Модуль 6. Автотесты на frontend', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 7, title: 'Модуль 7', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 8, title: 'Модуль 8. Мобилки', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 9, title: 'Модуль 9. Что такое CICD, инфраструктура', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 10, title: 'Модуль 10. Основные вопросы по автотестам', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 11, title: 'Модуль 11. Технические вопросы по языку', text: 'Раздел в разработке (без содержания)', completed: false, isTest: false },
+            { id: 12, title: 'Модуль 12. Подготовка к выходу на рынок', text: 'Финальный тест. Поздравляем с прохождением всех материалов!', completed: false, isTest: true,
                 test: {
                     question: 'Какой метод используется в Selenium WebDriver (Python) для поиска первого элемента, соответствующего локатору?',
                     options: [
@@ -272,6 +264,31 @@ const app = {
                 </div>
             </div>
         `).join('');
+
+        const modulesList = document.getElementById('mentorModulesList');
+        if (modulesList) {
+            modulesList.innerHTML = DB.course.lessons.map(m => `
+                <div class="hw-item" style="margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                    <input type="text" id="edit-module-${m.id}" value="${m.title}" style="flex: 1; margin-right: 1rem; padding: 0.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text);" />
+                    <button class="btn primary" onclick="app.saveModuleName(${m.id})">Сохранить</button>
+                </div>
+            `).join('');
+        }
+    },
+
+    saveModuleName(id) {
+        const input = document.getElementById(`edit-module-${id}`);
+        if (input) {
+            const lesson = DB.course.lessons.find(l => l.id === id);
+            if (lesson) {
+                lesson.title = input.value;
+                alert('Название модуля успешно сохранено!');
+                
+                if (document.getElementById('lessonSidebarList')) {
+                    this.renderLessonSidebar();
+                }
+            }
+        }
     },
 
     checkHw(id) {
