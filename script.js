@@ -318,8 +318,8 @@ const app = {
         btn.disabled = true;
 
         try {
-            // Пытаемся отправить данные на наш Python Backend (FastAPI + PostgreSQL)
-            const response = await fetch('http://localhost:8000/api/courses', {
+            // Пытаемся отправить данные на наш Python Backend (FastAPI + SQLite на Render)
+            const response = await fetch('https://it-mentor-platform.onrender.com/api/courses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title: title, description: desc })
