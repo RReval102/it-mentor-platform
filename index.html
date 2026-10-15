@@ -3,130 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Mentor | Платформа</title>
+    <title>IT Mentor — онлайн-школа QA Automation с личным ментором</title>
+    <meta name="description" content="IT Mentor — платформа обучения автоматизации тестирования: курсы, домашние задания с проверкой ментором, финальный экзамен и сертификат.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="is-login">
+    <div class="bg-orbs" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
+    </div>
+
     <nav class="navbar hidden" id="navbar">
-        <div class="logo">  
-            <span class="logo-icon">{'}'}</span> IT Mentor
+        <div class="logo">
+            <span class="logo-icon">{ }</span> IT Mentor
         </div>
         <div class="nav-links" id="navLinks">
             <!-- Dynamic links based on role -->
         </div>
         <div class="user-profile">
             <span class="role-badge" id="userRoleBadge"></span>
+            <span class="avatar" id="userAvatar"></span>
             <span class="user-name" id="userNameDisplay"></span>
-            <button class="btn-text" onclick="app.logout()">Выйти</button>
+            <button type="button" class="btn-text" id="logoutBtn" onclick="app.logout()">Выйти</button>
         </div>
     </nav>
 
     <main class="container">
-        <!-- View: Login -->
+        <!-- ============ View: Login / Landing ============ -->
         <section id="view-login" class="view active">
-            <div class="login-card">
-                <h2>Вход в платформу</h2>
-                <p>Используйте тестовые данные:<br><br>
-                   Студент: <b>student</b> / пароль: <b>123</b><br>
-                   Ментор: <b>mentor</b> / пароль: <b>123</b>
-                </p>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label>Логин (email)</label>
-                        <input type="text" id="loginEmail" required value="student">
+            <div class="landing">
+                <div class="landing-hero">
+                    <div class="logo logo-lg"><span class="logo-icon">{ }</span> IT Mentor</div>
+                    <span class="pill">🚀 Новый поток стартует 1 ноября</span>
+                    <h1 class="hero-title">Стань <span class="gradient-text">QA Automation</span> инженером с личным ментором</h1>
+                    <p class="hero-sub">12 модулей практики на Python, Selenium и Playwright, проверка домашних заданий опытным ментором, финальный экзамен и именной сертификат.</p>
+
+                    <ul class="feature-list">
+                        <li><span class="feature-icon">🎯</span><div><b>Практика с первого урока</b><span>Пишем реальные автотесты для живых проектов</span></div></li>
+                        <li><span class="feature-icon">👩‍🏫</span><div><b>Персональный ментор</b><span>Код-ревью каждого ДЗ в течение 24 часов</span></div></li>
+                        <li><span class="feature-icon">🏆</span><div><b>Сертификат и карьера</b><span>Помогаем с резюме и подготовкой к собеседованиям</span></div></li>
+                    </ul>
+
+                    <div class="hero-stats">
+                        <div><b>2 400+</b><span>выпускников</span></div>
+                        <div><b>87%</b><span>трудоустройство</span></div>
+                        <div><b>4.9 ★</b><span>рейтинг курса</span></div>
                     </div>
-                    <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="password" id="loginPassword" required value="123">
+                </div>
+
+                <div class="login-card glass">
+                    <h2>Вход в платформу</h2>
+                    <p class="login-hint">Демо-доступ — выберите роль или введите данные вручную</p>
+                    <div class="demo-chips">
+                        <button type="button" class="chip" id="demoStudentBtn" onclick="app.fillDemo('student')">🎓 Студент</button>
+                        <button type="button" class="chip" id="demoMentorBtn" onclick="app.fillDemo('mentor')">👩‍🏫 Ментор</button>
                     </div>
-                    <p class="error-msg" id="loginError"></p>
-                    <button type="submit" class="btn primary full-width">Войти</button>
-                </form>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Логин</label>
+                            <input type="text" id="loginEmail" required value="student" autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Пароль</label>
+                            <input type="password" id="loginPassword" required value="123" autocomplete="current-password">
+                        </div>
+                        <p class="error-msg" id="loginError"></p>
+                        <button type="submit" class="btn primary full-width" id="loginSubmitBtn">Войти</button>
+                    </form>
+                    <p class="login-foot">student / 123 &nbsp;•&nbsp; mentor / 123</p>
+                </div>
             </div>
         </section>
 
-        <!-- View: Student Dashboard -->
+        <!-- ============ View: Student Dashboard ============ -->
         <section id="view-student-dashboard" class="view">
             <header class="dashboard-header">
-                <h1 id="studentWelcome">Привет! 👋</h1>
-                <p>Продолжите свое обучение с того места, где остановились.</p>
+                <div>
+                    <h1 id="studentWelcome">Привет! 👋</h1>
+                    <p>Продолжите обучение с того места, где остановились.</p>
+                </div>
+                <span class="streak-pill">🔥 5 дней подряд</span>
             </header>
 
             <section class="stats-grid">
                 <div class="stat-card">
-                    <h3>Пройдено уроков</h3>
-                    <div class="value" id="statsLessons">2 / 3</div>
+                    <span class="stat-icon blue">📚</span>
+                    <h3>Пройдено модулей</h3>
+                    <div class="value" id="statsLessons">2 / 12</div>
                 </div>
                 <div class="stat-card">
+                    <span class="stat-icon violet">⭐</span>
                     <h3>Средний балл</h3>
                     <div class="value accent">95%</div>
                 </div>
                 <div class="stat-card">
+                    <span class="stat-icon green">🏆</span>
                     <h3>Сертификаты</h3>
                     <div class="value success" id="certCount">0</div>
                 </div>
-            </section>
-
-            <section class="courses-section">
-                <h2>Мои курсы</h2>
-                <div id="studentCoursesList"></div>
-            </section>
-        </section>
-
-        <!-- View: Mentor Dashboard -->
-        <section id="view-mentor-dashboard" class="view">
-            <header class="dashboard-header">
-                <h1>Панель ментора 👩‍🏫</h1>
-                <p>У вас есть новые работы на проверку.</p>
-            </header>
-            <section class="hw-section">
-                <h2>Работы на проверку</h2>
-                <div class="hw-list" id="mentorHwList">
-                    <!-- Dynamic HW items -->
+                <div class="stat-card">
+                    <span class="stat-icon amber">⏱️</span>
+                    <h3>Часов обучения</h3>
+                    <div class="value">38</div>
                 </div>
             </section>
 
-            <section class="course-section" style="margin-top: 2rem;">
+            <div class="dashboard-grid">
+                <section class="courses-section">
+                    <h2>Мои курсы</h2>
+                    <div id="studentCoursesList"></div>
+                    <div id="studentEnrolledList" class="enrolled-list"></div>
+                </section>
+
+                <aside class="side-column">
+                    <div class="panel glass">
+                        <h3>Активность за неделю</h3>
+                        <div class="activity-chart">
+                            <div class="bar" style="--h:40%"><span>Пн</span></div>
+                            <div class="bar" style="--h:75%"><span>Вт</span></div>
+                            <div class="bar" style="--h:55%"><span>Ср</span></div>
+                            <div class="bar" style="--h:90%"><span>Чт</span></div>
+                            <div class="bar" style="--h:65%"><span>Пт</span></div>
+                            <div class="bar" style="--h:30%"><span>Сб</span></div>
+                            <div class="bar today" style="--h:80%"><span>Вс</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel glass">
+                        <h3>Ближайшие события</h3>
+                        <ul class="events">
+                            <li><span class="event-date"><b>17</b>окт</span><div><b>Вебинар: Page Object</b><span>19:00 · онлайн</span></div></li>
+                            <li><span class="event-date"><b>20</b>окт</span><div><b>Дедлайн ДЗ по ООП</b><span>23:59</span></div></li>
+                            <li><span class="event-date"><b>24</b>окт</span><div><b>Mock-собеседование</b><span>18:30 · с ментором</span></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="panel glass mentor-card">
+                        <span class="avatar lg">АС</span>
+                        <div>
+                            <b>Анна Смирнова</b>
+                            <span>Ваш ментор · Senior QA</span>
+                        </div>
+                        <button type="button" class="btn ghost small" id="writeMentorBtn" onclick="app.toast('Сообщение ментору отправлено ✉️')">Написать</button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ============ View: Catalog ============ -->
+        <section id="view-catalog" class="view">
+            <header class="dashboard-header">
+                <div>
+                    <h1>Каталог курсов</h1>
+                    <p>Выберите следующее направление для роста.</p>
+                </div>
+            </header>
+            <div class="filter-chips" id="catalogFilters"></div>
+            <div class="catalog-grid" id="catalogGrid"></div>
+        </section>
+
+        <!-- ============ View: Mentor Dashboard ============ -->
+        <section id="view-mentor-dashboard" class="view">
+            <header class="dashboard-header">
+                <div>
+                    <h1>Панель ментора 👩‍🏫</h1>
+                    <p>У вас есть новые работы на проверку.</p>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon blue">👥</span>
+                    <h3>Студентов</h3>
+                    <div class="value">24</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon amber">📝</span>
+                    <h3>На проверке</h3>
+                    <div class="value" id="mentorPendingCount">3</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon green">⭐</span>
+                    <h3>Средняя оценка</h3>
+                    <div class="value success">4.7</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon violet">🎓</span>
+                    <h3>Курсов</h3>
+                    <div class="value accent" id="mentorCoursesCount">6</div>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <section class="hw-section" id="mentorHwSection">
+                    <h2>Работы на проверку</h2>
+                    <div class="hw-list" id="mentorHwList">
+                        <!-- Dynamic HW items -->
+                    </div>
+                </section>
+                <aside class="side-column">
+                    <div class="panel glass">
+                        <h3>Успеваемость группы</h3>
+                        <ul class="students-progress" id="mentorStudentsList"></ul>
+                    </div>
+                </aside>
+            </div>
+
+            <section class="course-section" id="mentorCoursesSection">
+                <h2>Управление курсами</h2>
+                <div class="courses-manage">
+                    <div class="panel glass">
+                        <h3>Создать новый курс</h3>
+                        <form id="addCourseForm">
+                            <div class="form-group">
+                                <label for="newCourseTitle">Название курса</label>
+                                <input type="text" id="newCourseTitle" required placeholder="Например: Python для начинающих">
+                            </div>
+                            <div class="form-group">
+                                <label for="newCourseDesc">Описание</label>
+                                <input type="text" id="newCourseDesc" required placeholder="Краткое описание...">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newCourseCategory">Направление</label>
+                                    <select id="newCourseCategory">
+                                        <option>Тестирование</option>
+                                        <option>Программирование</option>
+                                        <option>DevOps</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseLevel">Уровень</label>
+                                    <select id="newCourseLevel">
+                                        <option>С нуля</option>
+                                        <option>Junior+</option>
+                                        <option>Middle</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn primary" id="createCourseBtn">Создать курс</button>
+                        </form>
+                        <p id="addCourseStatus" class="form-status"></p>
+                    </div>
+
+                    <div class="panel glass">
+                        <h3>Курсы платформы</h3>
+                        <ul class="manage-list" id="mentorCoursesList"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="course-section" id="mentorModulesSection">
                 <h2>Редактирование модулей курса AQA</h2>
-                <div id="mentorModulesList" style="background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
+                <div id="mentorModulesList" class="panel glass">
                     <!-- Dynamic Module list with edit buttons -->
                 </div>
             </section>
-
-            <section class="course-section" style="margin-top: 2rem;">
-                <h2>Управление курсами</h2>
-                <div style="background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border);">
-                    <h3>Добавить новый курс (Интеграция с БД)</h3>
-                    <form id="addCourseForm">
-                        <div class="form-group">
-                            <label>Название курса</label>
-                            <input type="text" id="newCourseTitle" required placeholder="Например: Python для начинающих">
-                        </div>
-                        <div class="form-group">
-                            <label>Описание</label>
-                            <input type="text" id="newCourseDesc" required placeholder="Краткое описание...">
-                        </div>
-                        <button type="submit" class="btn primary">Создать курс в БД</button>
-                    </form>
-                    <p id="addCourseStatus" style="margin-top: 10px; font-weight: bold;"></p>
-                </div>
-            </section>
         </section>
 
-        <!-- View: Course Lesson & Test -->
+        <!-- ============ View: Course Lesson & Test ============ -->
         <section id="view-lesson" class="view">
-            <button class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад к курсам</button>
+            <button type="button" class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад к курсам</button>
             <div class="lesson-layout">
-                <div class="lesson-content">
+                <div class="lesson-content glass">
+                    <span class="lesson-meta" id="lessonMeta">Модуль 1 из 12</span>
                     <h2 id="lessonTitle">Название урока</h2>
                     <div class="video-placeholder">
-                        <span id="videoText">▶ Видеоплеер (Заглушка)</span>
+                        <span class="play-btn">▶</span>
+                        <span id="videoText">Видеоурок</span>
                     </div>
                     <div class="lesson-text" id="lessonText">
                         Описание урока...
                     </div>
-                    
+
+                    <div class="materials" id="lessonMaterials">
+                        <h4>Материалы урока</h4>
+                        <a href="#" onclick="event.preventDefault(); app.toast('Конспект скачан 📄')">📄 Конспект (PDF)</a>
+                        <a href="#" onclick="event.preventDefault(); app.toast('Репозиторий с примерами открыт 💻')">💻 Код примеров на GitHub</a>
+                        <a href="#" onclick="event.preventDefault(); app.toast('Домашнее задание добавлено в план 📝')">📝 Домашнее задание</a>
+                    </div>
+
                     <div class="test-section" id="testSection" style="display:none;">
                         <h3>Тестирование по курсу</h3>
                         <p class="test-desc">Пройдите финальный тест, чтобы получить сертификат об окончании.</p>
@@ -134,13 +294,22 @@
                         <div class="options-list" id="testOptions">
                             <!-- Radio buttons -->
                         </div>
-                        <button class="btn primary mt-4" onclick="app.submitTest()">Ответить</button>
+                        <button type="button" class="btn primary mt-4" id="submitTestBtn" onclick="app.submitTest()">Ответить</button>
                         <p id="testResult" class="test-result"></p>
                     </div>
 
+                    <div class="lesson-nav">
+                        <button type="button" class="btn ghost" id="prevLessonBtn" onclick="app.stepLesson(-1)">← Предыдущий</button>
+                        <button type="button" class="btn success" id="markDoneBtn" onclick="app.markLessonDone()">✓ Урок пройден</button>
+                        <button type="button" class="btn ghost" id="nextLessonBtn" onclick="app.stepLesson(1)">Следующий →</button>
+                    </div>
                 </div>
-                <div class="lesson-sidebar">
-                    <h3>Список уроков</h3>
+                <div class="lesson-sidebar glass">
+                    <h3>Программа курса</h3>
+                    <div class="sidebar-progress">
+                        <div class="progress-container"><div class="progress-bar" id="courseProgressBar"></div></div>
+                        <span class="progress-text" id="courseProgressText">0% завершено</span>
+                    </div>
                     <ul class="lesson-list" id="lessonSidebarList">
                         <!-- Lessons -->
                     </ul>
@@ -148,28 +317,43 @@
             </div>
         </section>
 
-        <!-- View: Certificate -->
+        <!-- ============ View: Certificate ============ -->
         <section id="view-certificate" class="view">
-             <button class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад в профиль</button>
-             <div class="certificate-wrapper">
-                 <div class="certificate" id="certDownloadArea">
-                     <div class="cert-bg"></div>
-                     <div class="cert-header">IT Mentor Platform</div>
-                     <h1>СЕРТИФИКАТ</h1>
-                     <p>Настоящим подтверждается, что студент</p>
-                     <h2 id="certStudentName">Иван Иванов</h2>
-                     <p>успешно прошел(а) программу обучения и сдал(а) финальный экзамен по курсу</p>
-                     <h3 id="certCourseName">QA Automation</h3>
-                     <div class="cert-footer">
-                         <span>Дата выдачи: <span id="certDate"></span></span>
-                         <span class="signature">Директор: _ _ _ _ _ _ _ _ _ _ _ _</span>
-                     </div>
-                 </div>
-                 <button class="btn primary mt-4" onclick="app.printCert()">Печать / Сохранить как PDF</button>
-             </div>
+            <button type="button" class="btn-text back-btn" onclick="app.navigate('student-dashboard')">← Назад в профиль</button>
+            <div class="certificate-wrapper">
+                <div class="certificate" id="certDownloadArea">
+                    <div class="cert-bg"></div>
+                    <div class="cert-header">IT Mentor Platform</div>
+                    <div class="cert-seal">★</div>
+                    <h1>СЕРТИФИКАТ</h1>
+                    <p>Настоящим подтверждается, что студент</p>
+                    <h2 id="certStudentName">Иван Иванов</h2>
+                    <p>успешно прошел(а) программу обучения и сдал(а) финальный экзамен по курсу</p>
+                    <h3 id="certCourseName">QA Automation</h3>
+                    <div class="cert-footer">
+                        <span>Дата выдачи: <span id="certDate"></span></span>
+                        <span>№ <span id="certNumber"></span></span>
+                        <span class="signature">Директор: _ _ _ _ _ _ _ _</span>
+                    </div>
+                </div>
+                <button type="button" class="btn primary mt-4" id="printCertBtn" onclick="app.printCert()">Печать / Сохранить как PDF</button>
+            </div>
         </section>
-
     </main>
+
+    <footer class="footer" id="footer">
+        <div class="footer-inner">
+            <div class="logo"><span class="logo-icon">{ }</span> IT Mentor</div>
+            <nav class="footer-links">
+                <a href="#" onclick="event.preventDefault(); app.toast('Раздел «О школе» скоро появится', 'info')">О школе</a>
+                <a href="#" onclick="event.preventDefault(); app.toast('Поддержка: support@itmentor.dev', 'info')">Поддержка</a>
+                <a href="https://github.com/RReval102/it-mentor-platform/actions" target="_blank" rel="noopener">Автотесты (CI)</a>
+            </nav>
+            <span class="footer-copy">© 2026 IT Mentor. Все права защищены.</span>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
     <script src="script.js"></script>
 </body>

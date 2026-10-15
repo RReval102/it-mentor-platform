@@ -4,6 +4,14 @@ const DB = {
         { login: 'student', password: '123', role: 'student', name: 'Иван Иванов' },
         { login: 'mentor', password: '123', role: 'mentor', name: 'Анна Смирнова' }
     ],
+    courses: [
+        { id: 1, title: 'QA Automation на Python', description: 'Полный практический курс по автоматизации тестирования на Python и Selenium.', category: 'Тестирование', level: 'Junior+' },
+        { id: 2, title: 'Тестирование REST API', description: 'Postman, Pytest и автоматизация backend API.', category: 'Тестирование', level: 'Junior+' },
+        { id: 3, title: 'CI/CD и Docker для QA', description: 'Инфраструктура и пайплайны автотестов.', category: 'DevOps', level: 'Middle' },
+        { id: 4, title: 'Нагрузочное тестирование', description: 'Тестирование производительности с k6 и JMeter.', category: 'Тестирование', level: 'Middle' },
+        { id: 5, title: 'Playwright с нуля', description: 'Современный E2E фреймворк для веб-приложений.', category: 'Тестирование', level: 'С нуля' },
+        { id: 6, title: 'Python для начинающих', description: 'Основы языка, структуры данных и алгоритмы.', category: 'Программирование', level: 'С нуля' }
+    ],
     course: {
         id: 1,
         title: 'AQA',
@@ -44,7 +52,28 @@ const DB = {
 // Main App Logic
 const app = {
     currentUser: null,
+    currentLessonId: 1,
     currentTestLessonId: null,
+
+    fillDemo(role) {
+        const email = document.getElementById('loginEmail');
+        const pass = document.getElementById('loginPassword');
+        if (email) email.value = role;
+        if (pass) pass.value = '123';
+    },
+
+    toast(msg) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast show';
+        toast.textContent = msg;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    },
     
     init() {
         // Event Listeners
@@ -177,6 +206,7 @@ const app = {
     },
 
     renderLesson(id) {
+        this.currentLessonId = id;
         // Highlight active
         document.querySelectorAll('#lessonSidebarList li').forEach(li => li.classList.remove('active'));
         const activeLi = document.getElementById(`sidebar-lesson-${id}`);
@@ -274,6 +304,25 @@ const app = {
                 </div>
             `).join('');
         }
+
+        this.renderMentorCoursesList();
+    },
+
+    renderMentorCoursesList() {
+        const list = document.getElementById('mentorCoursesList');
+        const count = document.getElementById('mentorCoursesCount');
+        if (count) count.textContent = DB.courses.length;
+        if (list) {
+            list.innerHTML = DB.courses.map(c => `
+                <li class="hw-item" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem; border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));">
+                    <div>
+                        <h4 style="margin: 0; font-size: 1rem;">${c.title}</h4>
+                        <p style="margin: 0.25rem 0 0; color: var(--text-secondary); font-size: 0.85rem;">${c.description}</p>
+                    </div>
+                    <span class="badge" style="white-space: nowrap; margin-left: 1rem;">${c.category || 'Курс'}</span>
+                </li>
+            `).join('');
+        }
     },
 
     saveModuleName(id) {
@@ -306,42 +355,44 @@ const app = {
         }, 800);
     },
 
-    async handleAddCourse(e) {
+    handleAddCourse(e) {
         e.preventDefault();
-        const title = document.getElementById('newCourseTitle').value;
-        const desc = document.getElementById('newCourseDesc').value;
+        const titleInput = document.getElementById('newCourseTitle');
+        const descInput = document.getElementById('newCourseDesc');
+        const categoryInput = document.getElementById('newCourseCategory');
+        const levelInput = document.getElementById('newCourseLevel');
         const statusEl = document.getElementById('addCourseStatus');
-        const btn = e.target.querySelector('button');
 
-        statusEl.textContent = 'Отправка данных в БД...';
-        statusEl.style.color = 'var(--text-secondary)';
-        btn.disabled = true;
+        const title = titleInput ? titleInput.value.trim() : '';
+        const desc = descInput ? descInput.value.trim() : '';
+        const category = categoryInput ? categoryInput.value : 'Тестирование';
+        const level = levelInput ? levelInput.value : 'С нуля';
 
-        try {
-            // Пытаемся отправить данные на наш Python Backend (FastAPI + SQLite на Render)
-            const response = await fetch('https://it-mentor-platform.onrender.com/api/courses', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: title, description: desc })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                statusEl.textContent = `✅ Курс "${data.title}" успешно добавлен в базу данных (ID: ${data.id})!`;
-                statusEl.style.color = 'var(--success)';
-                e.target.reset();
-            } else {
-                throw new Error('Ошибка сервера');
+        if (!title || !desc) {
+            if (statusEl) {
+                statusEl.textContent = '❗ Заполните обязательные поля.';
+                statusEl.style.color = 'var(--danger, #ef4444)';
             }
-        } catch (error) {
-            console.error('API Error:', error);
-            // Фолбэк для демо (если бэкенд выключен или это GitHub Pages)
-            statusEl.textContent = `✅ Курс "${title}" добавлен локально (бэкенд недоступен, симуляция).`;
-            statusEl.style.color = 'var(--accent)';
-            e.target.reset();
-        } finally {
-            btn.disabled = false;
+            return;
         }
+
+        const newCourse = {
+            id: DB.courses.length + 1,
+            title: title,
+            description: desc,
+            category: category,
+            level: level
+        };
+
+        DB.courses.push(newCourse);
+
+        if (statusEl) {
+            statusEl.textContent = `✅ Курс "${title}" успешно создан!`;
+            statusEl.style.color = 'var(--success, #10b981)';
+        }
+
+        this.renderMentorCoursesList();
+        e.target.reset();
     }
 };
 
